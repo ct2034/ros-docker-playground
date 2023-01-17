@@ -1,0 +1,50 @@
+services:
+  ros-master:
+    image: diagnostics:noetic
+    build:
+      context: .
+      dockerfile: noetic.Dockerfile
+    networks:
+      - ros
+    command: roscore
+    healthcheck:
+      test: [ "CMD", "rostopic", "list" ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  self_test:
+    image: diagnostics:noetic
+    networks:
+      - ros
+    environment:
+      - "ROS_MASTER_URI=http://ros-master:11311"
+    command: rosrun self_test selftest_example
+    depends_on:
+      - ros-master
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "rosservice",
+          "list",
+          "|",
+          "grep",
+          "self_test"
+        ]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  self_test_client:
+    image: diagnostics:noetic
+    networks:
+      - ros
+    environment:
+      - "ROS_MASTER_URI=http://ros-master:11311"
+    command: rosrun self_test run_selftest my_node
+    depends_on:
+      - ros-master
+      - self_test
+
+networks:
+  ros:
+    driver: bridge
