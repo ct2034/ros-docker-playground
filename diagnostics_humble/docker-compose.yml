@@ -1,0 +1,40 @@
+services:
+  self_test:
+    image: diagnostics:humble
+    build:
+      context: .
+      dockerfile: humble.Dockerfile
+    networks:
+      - ros
+    command: ros2 run self_test selftest_example
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "ros2",
+          "service",
+          "list",
+          "|",
+          "grep",
+          "self_test"
+        ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+  self_test_client:
+    image: diagnostics:humble
+    networks:
+      - ros
+    command: ros2 run self_test run_selftest
+    depends_on:
+      - self_test
+  show_services:
+    image: diagnostics:humble
+    networks:
+      - ros
+    command: ros2 service list
+    depends_on:
+      - self_test
+networks:
+  ros:
+    driver: bridge
