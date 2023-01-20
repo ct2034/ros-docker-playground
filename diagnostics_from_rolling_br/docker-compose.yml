@@ -3,26 +3,32 @@ services:
     image: build_diagnostics:foxy
     build:
       context: .
-      dockerfile: foxy.Dockerfile
+      dockerfile: Dockerfile
+      args:
+        - distro=foxy
     volumes:
-      - /home/hec2le/ros/diagnostics_ws/src/diagnostics:/colcon_ws/src/diagnostics:ro
+      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_foxy:/colcon_ws/build:rw
-    command: /bin/bash -c "source /opt/ros/foxy/setup.bash && colcon build --symlink-install && colcon test && colcon test-result"
+    command: /bin/bash -c "rm -rf build/* && source /opt/ros/foxy/setup.bash && colcon build && colcon test && colcon test-result"
   build_humble:
     image: build_diagnostics:humble
     build:
       context: .
-      dockerfile: humble.Dockerfile
+      dockerfile: Dockerfile
+      args:
+        - distro=humble
     volumes:
-      - /home/hec2le/ros/diagnostics_ws/src/diagnostics:/colcon_ws/src/diagnostics:ro
+      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_humble:/colcon_ws/build:rw
-    command: /bin/bash -c "source /opt/ros/humble/setup.bash && colcon build --symlink-install && colcon test && colcon test-result"
+    command: /bin/bash -c "rm -rf build/* && source /opt/ros/humble/setup.bash && colcon build && colcon test && colcon test-result"
   build_rolling:
     image: build_diagnostics:rolling
     build:
       context: .
-      dockerfile: rolling.Dockerfile
+      dockerfile: Dockerfile
+      args:
+        - distro=rolling
     volumes:
-      - /home/hec2le/ros/diagnostics_ws/src/diagnostics:/colcon_ws/src/diagnostics:ro
+      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_rolling:/colcon_ws/build:rw
-    command: /bin/bash -c "source /opt/ros/rolling/setup.bash && colcon build --symlink-install && colcon test && colcon test-result"
+    command: /bin/bash -c "rm -rf build/* && source /opt/ros/rolling/setup.bash && colcon build && colcon test && colcon test-result"
