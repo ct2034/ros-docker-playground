@@ -23,6 +23,7 @@ RUN echo "\
     cmake_minimum_required(VERSION 3.15)\n\
     project(xxx)\n\
     find_package(ament_cmake_auto REQUIRED)\n\
+    find_package(pluginlib REQUIRED)\n\
     ament_auto_find_build_dependencies()\n\
     ament_auto_add_library(xxx_lib SHARED test.cpp)\n\
     ament_auto_package()\n\
