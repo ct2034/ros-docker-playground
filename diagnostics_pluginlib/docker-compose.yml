@@ -1,0 +1,29 @@
+services:
+  diagnostics_foxy:
+    image: diagnostics:foxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_VERSION: foxy
+  diagnostics_galactic:
+    image: diagnostics:galactic
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_VERSION: galactic
+  diagnostics_humble:
+    image: diagnostics:humble
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_VERSION: humble
+  diagnostics_rolling:
+    image: diagnostics:rolling
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_VERSION: rolling
