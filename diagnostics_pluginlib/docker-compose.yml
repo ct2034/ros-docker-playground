@@ -5,25 +5,37 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        ROS_VERSION: foxy
+        ROS_DISTRO: foxy
+    volumes:
+      - ../../diagnostics:/ws/src/diagnostics:ro
+      - ./build_foxy:/colcon_ws/build:rw
   diagnostics_galactic:
     image: diagnostics:galactic
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        ROS_VERSION: galactic
+        ROS_DISTRO: galactic
+    volumes:
+      - ../../diagnostics:/ws/src/diagnostics:ro
+      - ./build_galactic:/colcon_ws/build:rw
   diagnostics_humble:
     image: diagnostics:humble
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        ROS_VERSION: humble
+        ROS_DISTRO: humble
+    volumes:
+      - ../../diagnostics:/ws/src/diagnostics:ro
+      - ./build_humble:/colcon_ws/build:rw
   diagnostics_rolling:
     image: diagnostics:rolling
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        ROS_VERSION: rolling
+        ROS_DISTRO: rolling
+    volumes:
+      - ../../diagnostics:/ws/src/diagnostics:ro
+      - ./build_rolling:/colcon_ws/build:rw
