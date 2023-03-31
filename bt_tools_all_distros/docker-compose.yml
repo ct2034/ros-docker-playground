@@ -1,0 +1,40 @@
+services:
+  build_foxy:
+    image: build_bt_tools:foxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DISTRO=foxy
+        - DISTROO=foxy
+    volumes:
+      - ../../bt_tools:/colcon_ws/src/bt_tools:ro
+      - ../../BehaviorTree.CPP:/colcon_ws/src/BehaviorTree.CPP:ro
+      - ./build_foxy:/colcon_ws/build:rw
+    command: /bin/bash -c "rm -rf build/* && source /opt/ros/foxy/setup.bash && rosdep install -y --from-paths src --ignore-src --rosdistro foxy && colcon build && colcon test && colcon test-result"
+  build_humble:
+    image: build_bt_tools:humble
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DISTRO=humble
+        - DISTROO=humble
+    volumes:
+      - ../../bt_tools:/colcon_ws/src/bt_tools:ro
+      - ../../BehaviorTree.CPP:/colcon_ws/src/BehaviorTree.CPP:ro
+      - ./build_humble:/colcon_ws/build:rw
+    command: /bin/bash -c "rm -rf build/* && source /opt/ros/humble/setup.bash && rosdep install -y --from-paths src --ignore-src --rosdistro humble && colcon build && colcon test && colcon test-result"
+  build_rolling:
+    image: build_bt_tools:rolling
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DISTRO=rolling
+        - DISTROO=rolling
+    volumes:
+      - ../../bt_tools:/colcon_ws/src/bt_tools:ro
+      - ../../BehaviorTree.CPP:/colcon_ws/src/BehaviorTree.CPP:ro
+      - ./build_rolling:/colcon_ws/build:rw
+    command: /bin/bash -c "rm -rf build/* && source /opt/ros/rolling/setup.bash && rosdep install -y --from-paths src --ignore-src --rosdistro rolling && colcon build && colcon test && colcon test-result"
