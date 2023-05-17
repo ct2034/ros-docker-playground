@@ -1,1 +1,2 @@
-diagnostics_from_rolling_br/build_*/
+diagnostics_all_distros/build_*/
+bt_tools_all_distros/build_*/
