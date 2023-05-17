@@ -1,0 +1,30 @@
+services:
+  foxy:
+    image: ros:foxy
+    volumes:
+      - ../../bt_tools:/colcon_ws/src/bt_tools:ro
+      - ../../BehaviorTree.CPP:/src/BehaviorTree.CPP:ro
+      - ./build_foxy:/colcon_ws/build:rw
+    command: /bin/bash -c "tail -f /dev/null"
+    # then in .. 
+    # `docker exec -it bt_tools_demo_foxy_foxy_1 bash`
+
+    # rm -rf build/* 
+    # apt update
+    # cd /src
+    # source /opt/ros/foxy/setup.bash 
+    # rosdep install -y --from-paths . --ignore-src --rosdistro foxy 
+
+    # mkdir build
+    # cd build
+    # cmake ../BehaviorTree.CPP -DBTCPP_BUILD_TOOLS=1
+    # make
+
+
+    # cd /colcon_ws
+    # rosdep install -y --from-paths src --ignore-src --rosdistro foxy 
+    # colcon build 
+    # source install/setup.sh
+    # colcon test 
+    # colcon test-result
+
