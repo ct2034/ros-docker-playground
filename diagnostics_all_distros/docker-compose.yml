@@ -1,15 +1,15 @@
 services:
-  build_foxy:
-    image: build_diagnostics:foxy
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - distro=foxy
-    volumes:
-      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
-      - ./build_foxy:/colcon_ws/build:rw
-    command: /bin/bash -c "rm -rf build/* && source /opt/ros/foxy/setup.bash && colcon build && colcon test && colcon test-result"
+  # build_foxy:
+  #   image: build_diagnostics:foxy
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - distro=foxy
+  #   volumes:
+  #     - ../../diagnostics:/colcon_ws/src/diagnostics:ro
+  #     - ./build_foxy:/colcon_ws/build:rw
+  #   command: /bin/bash -c "rm -rf build/* && source /opt/ros/foxy/setup.bash && colcon build && colcon test && colcon test-result"
   build_humble:
     image: build_diagnostics:humble
     build:
