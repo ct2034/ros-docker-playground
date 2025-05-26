@@ -15,24 +15,15 @@ services:
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_humble:/colcon_ws/build:rw
-    command: /bin/bash -c "rm -rf build/* && source /opt/ros/humble/setup.bash && colcon build && colcon test && colcon test-result"
-  build_iron:
-    image: build_diagnostics:iron
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - distro=iron
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 4G
-    volumes:
-      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
-      - ./build_iron:/colcon_ws/build:rw
-    command: /bin/bash -c "rm -rf build/* && source /opt/ros/iron/setup.bash && colcon build && colcon test && colcon test-result"
+    command: >
+      /bin/bash -c "
+        rm -rf build/* &&
+        source /opt/ros/humble/setup.bash &&
+        rosdep install -y --from-path src/ --ignore-src &&
+        colcon build &&
+        colcon test &&
+        colcon test-result
+      "
   build_jazzy:
     image: build_diagnostics:jazzy
     build:
@@ -49,7 +40,40 @@ services:
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_jazzy:/colcon_ws/build:rw
-    command: /bin/bash -c "rm -rf build/* && source /opt/ros/jazzy/setup.bash && colcon build && colcon test && colcon test-result"
+    command: >
+      /bin/bash -c "
+        rm -rf build/* &&
+        source /opt/ros/jazzy/setup.bash &&
+        rosdep install -y --from-path src/ --ignore-src &&
+        colcon build &&
+        colcon test &&
+        colcon test-result
+      "
+  build_kilted:
+    image: build_diagnostics:kilted
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - distro=kilted
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 4G
+    volumes:
+      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
+      - ./build_kilted:/colcon_ws/build:rw
+    command: >
+      /bin/bash -c "
+        rm -rf build/* &&
+        source /opt/ros/kilted/setup.bash &&
+        rosdep install -y --from-path src/ --ignore-src &&
+        colcon build &&
+        colcon test &&
+        colcon test-result
+      "
   build_rolling:
     image: build_diagnostics:rolling
     build:
@@ -60,10 +84,18 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
+          memory: 8G
         reservations:
-          memory: 4G
+          memory: 8G
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_rolling:/colcon_ws/build:rw
-    command: /bin/bash -c "rm -rf build/* && source /opt/ros/rolling/setup.bash && colcon build && colcon test && colcon test-result"
+    command: >
+      /bin/bash -c "
+        rm -rf build/* &&
+        source /opt/ros/rolling/setup.bash &&
+        rosdep install -y --from-path src/ --ignore-src &&
+        colcon build &&
+        colcon test &&
+        colcon test-result
+      "
