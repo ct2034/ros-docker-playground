@@ -1,17 +1,22 @@
+x-build-defaults: &build-defaults
+  context: .
+  dockerfile: Dockerfile
+
+x-deploy-defaults: &deploy-defaults
+  resources:
+    limits:
+      memory: 4G
+    reservations:
+      memory: 4G
+
 services:
   build_humble:
     image: build_diagnostics:humble
     build:
-      context: .
-      dockerfile: Dockerfile
+      <<: *build-defaults
       args:
         - distro=humble
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 4G
+    deploy: *deploy-defaults
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_humble:/colcon_ws/build:rw
@@ -27,16 +32,10 @@ services:
   build_jazzy:
     image: build_diagnostics:jazzy
     build:
-      context: .
-      dockerfile: Dockerfile
+      <<: *build-defaults
       args:
         - distro=jazzy
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 4G
+    deploy: *deploy-defaults
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_jazzy:/colcon_ws/build:rw
@@ -52,16 +51,10 @@ services:
   build_kilted:
     image: build_diagnostics:kilted
     build:
-      context: .
-      dockerfile: Dockerfile
+      <<: *build-defaults
       args:
         - distro=kilted
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 4G
+    deploy: *deploy-defaults
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_kilted:/colcon_ws/build:rw
@@ -77,16 +70,10 @@ services:
   build_rolling:
     image: build_diagnostics:rolling
     build:
-      context: .
-      dockerfile: Dockerfile
+      <<: *build-defaults
       args:
         - distro=rolling
-    deploy:
-      resources:
-        limits:
-          memory: 8G
-        reservations:
-          memory: 8G
+    deploy: *deploy-defaults
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_rolling:/colcon_ws/build:rw
