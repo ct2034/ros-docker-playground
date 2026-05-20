@@ -1,2 +1,3 @@
 diagnostics_all_distros/build_*/
+diagnostics_all_distros/log_*/
 bt_tools_all_distros/build_*/
