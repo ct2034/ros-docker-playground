@@ -14,8 +14,7 @@ e.g. rolling only
 docker compose run --rm build_rolling
 ```
 
-Maybe clean the build folder for reproducibility
+Some notes:
 
-```bash
-sudo rm -rf build_*/*
-```
+- This will also empty the build folder first <https://github.com/ct2034/ros-docker-playground/blob/main/diagnostics_all_distros/docker-compose.yml#L25-L26>)
+- The build uses `-Werror`, but this is not what the CI does normally.
