@@ -20,7 +20,7 @@ services:
         rm -rf build/* &&
         source /opt/ros/humble/setup.bash &&
         rosdep install -y --from-path src/ --ignore-src &&
-        colcon build &&
+        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
         colcon test &&
         colcon test-result
       "
@@ -45,7 +45,7 @@ services:
         rm -rf build/* &&
         source /opt/ros/jazzy/setup.bash &&
         rosdep install -y --from-path src/ --ignore-src &&
-        colcon build &&
+        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
         colcon test &&
         colcon test-result
       "
@@ -70,7 +70,7 @@ services:
         rm -rf build/* &&
         source /opt/ros/kilted/setup.bash &&
         rosdep install -y --from-path src/ --ignore-src &&
-        colcon build &&
+        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
         colcon test &&
         colcon test-result
       "
@@ -95,7 +95,7 @@ services:
         rm -rf build/* &&
         source /opt/ros/rolling/setup.bash &&
         rosdep install -y --from-path src/ --ignore-src &&
-        colcon build &&
+        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
         colcon test &&
         colcon test-result
       "
