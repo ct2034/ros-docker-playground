@@ -9,6 +9,16 @@ x-deploy-defaults: &deploy-defaults
     reservations:
       memory: 4G
 
+x-command: &command >
+  /bin/bash -c "
+    rm -rf build/* &&
+    source /opt/ros/$$DISTRO/setup.bash &&
+    rosdep install -y --from-path src/ --ignore-src &&
+    colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
+    colcon test &&
+    colcon test-result
+  "
+
 services:
   build_humble:
     image: build_diagnostics:humble
@@ -17,18 +27,12 @@ services:
       args:
         - distro=humble
     deploy: *deploy-defaults
+    environment:
+      - DISTRO=humble
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_humble:/colcon_ws/build:rw
-    command: >
-      /bin/bash -c "
-        rm -rf build/* &&
-        source /opt/ros/humble/setup.bash &&
-        rosdep install -y --from-path src/ --ignore-src &&
-        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
-        colcon test &&
-        colcon test-result
-      "
+    command: *command
   build_jazzy:
     image: build_diagnostics:jazzy
     build:
@@ -36,18 +40,12 @@ services:
       args:
         - distro=jazzy
     deploy: *deploy-defaults
+    environment:
+      - DISTRO=jazzy
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_jazzy:/colcon_ws/build:rw
-    command: >
-      /bin/bash -c "
-        rm -rf build/* &&
-        source /opt/ros/jazzy/setup.bash &&
-        rosdep install -y --from-path src/ --ignore-src &&
-        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
-        colcon test &&
-        colcon test-result
-      "
+    command: *command
   build_kilted:
     image: build_diagnostics:kilted
     build:
@@ -55,18 +53,12 @@ services:
       args:
         - distro=kilted
     deploy: *deploy-defaults
+    environment:
+      - DISTRO=kilted
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_kilted:/colcon_ws/build:rw
-    command: >
-      /bin/bash -c "
-        rm -rf build/* &&
-        source /opt/ros/kilted/setup.bash &&
-        rosdep install -y --from-path src/ --ignore-src &&
-        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
-        colcon test &&
-        colcon test-result
-      "
+    command: *command
   build_rolling:
     image: build_diagnostics:rolling
     build:
@@ -74,15 +66,9 @@ services:
       args:
         - distro=rolling
     deploy: *deploy-defaults
+    environment:
+      - DISTRO=rolling
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./build_rolling:/colcon_ws/build:rw
-    command: >
-      /bin/bash -c "
-        rm -rf build/* &&
-        source /opt/ros/rolling/setup.bash &&
-        rosdep install -y --from-path src/ --ignore-src &&
-        colcon build --cmake-args -DCMAKE_CXX_FLAGS="-Werror" &&
-        colcon test &&
-        colcon test-result
-      "
+    command: *command
