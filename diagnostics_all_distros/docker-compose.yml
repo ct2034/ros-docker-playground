@@ -31,7 +31,8 @@ services:
       - DISTRO=humble
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
-      - ./build_humble:/colcon_ws/build:rw
+      - ./humble_build:/colcon_ws/build:rw
+      - ./humble_log:/colcon_ws/log:rw
     command: *command
   build_jazzy:
     image: build_diagnostics:jazzy
@@ -44,7 +45,8 @@ services:
       - DISTRO=jazzy
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
-      - ./build_jazzy:/colcon_ws/build:rw
+      - ./jazzy_build:/colcon_ws/build:rw
+      - ./jazzy_log:/colcon_ws/log:rw
     command: *command
   build_kilted:
     image: build_diagnostics:kilted
@@ -57,7 +59,8 @@ services:
       - DISTRO=kilted
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
-      - ./build_kilted:/colcon_ws/build:rw
+      - ./kilted_build:/colcon_ws/build:rw
+      - ./kilted_log:/colcon_ws/log:rw
     command: *command
   build_rolling:
     image: build_diagnostics:rolling
@@ -70,5 +73,6 @@ services:
       - DISTRO=rolling
     volumes:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
-      - ./build_rolling:/colcon_ws/build:rw
+      - ./rolling_build:/colcon_ws/build:rw
+      - ./rolling_log:/colcon_ws/log:rw
     command: *command

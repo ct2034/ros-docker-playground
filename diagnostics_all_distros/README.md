@@ -17,4 +17,5 @@ docker compose run --rm build_rolling
 Some notes:
 
 - This will also empty the build folder first <https://github.com/ct2034/ros-docker-playground/blob/main/diagnostics_all_distros/docker-compose.yml#L25-L26>)
+- You may want to manually empty the log folders `sudo rm -r ./*_log/*`
 - The build uses `-Werror`, but this is not what the CI does normally.
