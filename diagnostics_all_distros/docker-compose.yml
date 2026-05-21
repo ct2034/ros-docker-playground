@@ -1,6 +1,6 @@
 x-build-defaults: &build-defaults
   context: .
-  dockerfile: Dockerfile
+  dockerfile: Dockerfile_ros
 
 x-deploy-defaults: &deploy-defaults
   resources:
@@ -61,6 +61,21 @@ services:
       - ../../diagnostics:/colcon_ws/src/diagnostics:ro
       - ./kilted_build:/colcon_ws/build:rw
       - ./kilted_log:/colcon_ws/log:rw
+    command: *command
+  build_lyrical:
+    image: build_diagnostics:lyrical
+    build:
+      <<: *build-defaults
+      dockerfile: Dockerfile_lyrical_resolute
+      args:
+        - distro=lyrical
+    deploy: *deploy-defaults
+    environment:
+      - DISTRO=lyrical
+    volumes:
+      - ../../diagnostics:/colcon_ws/src/diagnostics:ro
+      - ./lyrical_build:/colcon_ws/build:rw
+      - ./lyrical_log:/colcon_ws/log:rw
     command: *command
   build_rolling:
     image: build_diagnostics:rolling
